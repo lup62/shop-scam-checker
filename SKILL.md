@@ -96,6 +96,16 @@ Presenta il risultato in questo formato:
 [Raccomandazione finale personalizzata basata sull'analisi]
 ```
 
+### 4. Condivisione del report
+
+Dopo aver presentato il report, chiedi all'utente se vuole una versione esportabile. Se l'utente accetta o lo chiede esplicitamente (es. "dammi il report", "voglio condividerlo", "mandamelo"), genera:
+
+- Un **messaggio pronto da copiare e incollare** — versione compatta del report con punteggio, verdetto, red flags principali e consiglio finale, formattata in modo leggibile anche su WhatsApp/Telegram (senza markdown pesante)
+
+Oppure, se l'utente lo preferisce:
+
+- Un **file** (.md o .txt) con il report completo e dettagliato, inclusa la tabella dei segnali
+
 ### Note importanti
 
 - Specifica sempre che questa è un'analisi automatizzata e non una garanzia assoluta
