@@ -1,107 +1,110 @@
 # 🔍 Shop Scam Checker
 
-Una skill per [Claude](https://claude.ai) che analizza un sito e-commerce e assegna un punteggio di affidabilità (0–100) per verificare se è uno scam.
+A [Claude](https://claude.ai) skill that analyzes an e-commerce website and assigns a trustworthiness score (0–100) to determine if it's a scam.
 
-## Cosa fa
+🇮🇹 [Leggi in italiano](./README.it.md)
 
-Dato un URL di un negozio online, la skill esegue un'analisi approfondita su 10 segnali:
+## What it does
 
-| Segnale | Cosa verifica |
+Given an online store URL, the skill performs an in-depth analysis across 10 signals:
+
+| Signal | What it checks |
 |---|---|
-| **SSL/HTTPS** | Presenza del certificato di sicurezza |
-| **Età dominio** | Da quanto tempo esiste il sito (WHOIS) |
-| **Contatti** | Indirizzo, telefono, email, P.IVA — e se la P.IVA è copiata da un'altra azienda |
-| **Policy legali** | Privacy Policy, Termini e Condizioni, Resi |
-| **Metodi pagamento** | PayPal, carta con protezione, o solo bonifico/crypto |
-| **Recensioni esterne** | Trustpilot, Google Reviews, Reddit |
-| **Prezzi** | Confronto con Amazon e store ufficiali |
-| **Qualità contenuti** | Testi originali o copiati, errori, recensioni fake |
-| **Social media** | Profili attivi e reali o assenti/fake |
-| **Segnalazioni scam** | Presenza in blacklist, forum, segnalazioni online |
+| **SSL/HTTPS** | Security certificate present |
+| **Domain age** | How long the site has existed (WHOIS) |
+| **Contact info** | Address, phone, email, VAT number — and whether the VAT number is stolen from another business |
+| **Legal pages** | Privacy Policy, Terms & Conditions, Returns |
+| **Payment methods** | PayPal, card with buyer protection, or wire/crypto only |
+| **External reviews** | Trustpilot, Google Reviews, Reddit |
+| **Prices** | Comparison with Amazon and official stores |
+| **Content quality** | Original or copied text, errors, fake reviews |
+| **Social media** | Active real profiles or absent/fake |
+| **Scam reports** | Presence on blacklists, forums, online reports |
 
-### Verdetti
+### Verdicts
 
-- 🟢 **AFFIDABILE** (80–100)
-- 🟡 **PROCEDERE CON CAUTELA** (50–79)
-- 🟠 **SOSPETTO** (25–49)
-- 🔴 **PROBABILE SCAM** (0–24)
+- 🟢 **TRUSTWORTHY** (80–100)
+- 🟡 **PROCEED WITH CAUTION** (50–79)
+- 🟠 **SUSPICIOUS** (25–49)
+- 🔴 **LIKELY SCAM** (0–24)
 
-## Installazione
+## Installation
 
-### Requisiti
+### Requirements
 
-- Un account [Claude Pro, Team o Enterprise](https://claude.ai) con le **Skills** abilitate
+- A [Claude Pro, Team, or Enterprise](https://claude.ai) account with **Skills** enabled
 
-### Passaggi
+### Steps
 
-1. Apri [claude.ai](https://claude.ai)
-2. Vai in **Impostazioni** → **Skills**
-3. Clicca **"Aggiungi skill"** (o "Add skill")
-4. Clicca **"Crea skill"** (o "Create skill")
-5. Compila i campi:
-   - **Nome**: `shop-scam-checker`
-   - **Descrizione**: `Analyze an online shop URL and score its trustworthiness — use when the user asks to check if a website or shop is a scam, legit, or trustworthy.`
-   - **Istruzioni (SKILL.md)**: copia e incolla il contenuto del file [`SKILL.md`](./SKILL.md) di questa repo
-6. Salva
+1. Open [claude.ai](https://claude.ai)
+2. Go to **Settings** → **Skills**
+3. Click **"Add skill"**
+4. Click **"Create skill"**
+5. Fill in the fields:
+   - **Name**: `shop-scam-checker`
+   - **Description**: `Analyze an online shop URL and score its trustworthiness — use when the user asks to check if a website or shop is a scam, legit, or trustworthy.`
+   - **Instructions (SKILL.md)**: copy and paste the contents of the [`SKILL.md`](./SKILL.md) file from this repo
+6. Save
 
-### Uso
+### Usage
 
-In una chat con Claude, scrivi semplicemente:
-
-```
-/shop-scam-checker esempio-shop.com
-```
-
-Oppure chiedi in linguaggio naturale:
+In a chat with Claude, simply type:
 
 ```
-Puoi verificare se questo sito è affidabile? https://esempio-shop.com
+/shop-scam-checker example-shop.com
+```
+
+Or ask in natural language:
+
+```
+Can you check if this site is legit? https://example-shop.com
 ```
 
 ```
-È uno scam questo sito? esempio-shop.it
+Is this website a scam? example-shop.com
 ```
 
-Claude riconoscerà automaticamente la richiesta e attiverà la skill.
+Claude will automatically recognize the request and activate the skill.
 
-### Output di esempio
+### Example output
 
-La skill produce un report dettagliato come questo:
+The skill produces a detailed report like this:
 
 ```
-🔍 Shop Scam Check: esempio-shop.com
+🔍 Shop Scam Check: example-shop.com
 
-Punteggio di affidabilità: 22/100
+Trustworthiness score: 22/100
 
-Verdetto: 🔴 PROBABILE SCAM
+Verdict: 🔴 LIKELY SCAM
 
 ┌─────────────────────┬─────────────────────────────┬──────────┐
-│ Segnale              │ Trovato                     │ Punti    │
+│ Signal               │ Found                       │ Score    │
 ├─────────────────────┼─────────────────────────────┼──────────┤
-│ SSL/HTTPS            │ Presente                    │ +5       │
-│ Età dominio          │ < 6 mesi                    │ -15      │
-│ Contatti             │ Solo email, P.IVA copiata   │ -15      │
+│ SSL/HTTPS            │ Present                     │ +5       │
+│ Domain age           │ < 6 months                  │ -15      │
+│ Contact info         │ Email only, stolen VAT ID   │ -15      │
 │ ...                  │ ...                         │ ...      │
 └─────────────────────┴─────────────────────────────┴──────────┘
 
-⚠️ Red flags trovate
-• Prezzi irrealistici (iPhone 16 a 200€)
-• P.IVA copiata da un'azienda non correlata
+⚠️ Red flags found
+• Unrealistic prices (iPhone 16 at $200)
+• VAT number copied from an unrelated company
 • ...
 
-✅ Segnali positivi
-• SSL presente
+✅ Positive signals
+• SSL present
 • ...
 
-💡 Consiglio
-Non acquistare su questo sito. [motivazione personalizzata]
+💡 Recommendation
+Do not buy from this site. [personalized reasoning]
 ```
 
-## File
+## Files
 
-- [`README.md`](./README.md) — Questa documentazione
-- [`SKILL.md`](./SKILL.md) — Le istruzioni della skill (da copiare in Claude)
+- [`README.md`](./README.md) — This documentation (English)
+- [`README.it.md`](./README.it.md) — Documentazione in italiano
+- [`SKILL.md`](./SKILL.md) — Skill instructions (copy into Claude)
 
-## Licenza
+## License
 
 MIT
